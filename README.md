@@ -114,7 +114,7 @@ api - запуск Api тестов с тегом "api"
 
 
 <h2 name="testops">:memo:Интеграция с Allure TestOps:memo:</h2>
-<h3>Список всех тест-кейсов</h3>
+<h3>Список тест-кейсов</h3>
 <p align="center">
 <img src="media/testops/testops.png">
 </p>
