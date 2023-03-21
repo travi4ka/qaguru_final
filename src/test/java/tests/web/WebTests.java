@@ -74,7 +74,7 @@ public class WebTests extends TestBase {
 
     @ParameterizedTest
     @Tag("web")
-    @DisplayName("It Is Possible to search data")
+    @DisplayName("Checking titles for pages")
     @CsvSource({
             "Главная, Главная - TMDB",
             "Фильмы, Фильмы - TMDB",
