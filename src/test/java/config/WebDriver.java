@@ -1,18 +1,12 @@
 package config;
 
 import com.codeborne.selenide.Configuration;
-import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
+import static tests.TestBase.config;
+
 public class WebDriver {
-    private Config config;
-
     public WebDriver() {
-        this.config = ConfigFactory.create(Config.class, System.getProperties());
-        createWebDriver();
-    }
-
-    private void createWebDriver() {
         Configuration.browser = config.getBrowser();
         Configuration.baseUrl = config.getBaseUrl();
         Configuration.browserVersion = config.getBrowserVersion();

@@ -3,7 +3,6 @@ package config;
 import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 
@@ -16,10 +15,9 @@ import java.net.URL;
 import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
+import static tests.TestBase.config;
 
 public class LocalMobileDriver implements WebDriverProvider {
-
-    public static Config config = ConfigFactory.create(Config.class, System.getProperties());
 
     public static URL getAppiumServerUrl() {
         try {

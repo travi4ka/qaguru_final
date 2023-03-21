@@ -7,10 +7,12 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.BrowserstackMobileDriver;
+import config.Config;
 import config.LocalMobileDriver;
 import config.WebDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,6 +21,8 @@ import pages.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBase {
+    public static Config config = ConfigFactory.create(Config.class, System.getProperties());
+
     public LandingPage landingPage = new LandingPage();
     public MainPage mainPage = new MainPage();
     public ReleasesPage releasesPage = new ReleasesPage();
