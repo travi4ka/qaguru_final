@@ -39,7 +39,10 @@ public class TestBase {
                 Configuration.browser = BrowserstackMobileDriver.class.getName();
                 Configuration.browserSize = null;
                 break;
-            case "web_local", "web_remote":
+            case "web_local":
+                new WebDriver();
+                break;
+            case "web_remote":
                 new WebDriver();
                 break;
             case "api":
