@@ -11,7 +11,7 @@ public class SearchPage {
     private SelenideElement searchTooltip = $("div.search__input");
 
     @Step("Page is open")
-    public SearchPage pageIsOpen() {
+    public SearchPage verifyThatPageIsOpen() {
         searchTooltip.shouldBe(visible);
         return this;
     }

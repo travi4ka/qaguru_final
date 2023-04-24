@@ -7,26 +7,26 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 
-public class TopMenu {
+public class TopMenuComponent {
     private SelenideElement logo = $("div.head__logo-icon");
     private SelenideElement titleReleases;
     private SelenideElement actions = $("div.head__actions");
     private SelenideElement searchIcon = actions.$$("div").first();
 
     @Step("Click logo")
-    public TopMenu clickLogo() {
+    public TopMenuComponent clickLogo() {
         logo.click();
         return this;
     }
 
     @Step("Click search")
-    public TopMenu clickSearch() {
+    public TopMenuComponent clickSearch() {
         searchIcon.click();
         return this;
     }
 
     @Step("Check title")
-    public TopMenu checkTitle(String value) {
+    public TopMenuComponent checkTitle(String value) {
         titleReleases = $(byText(value));
         titleReleases.shouldBe(visible);
         return this;

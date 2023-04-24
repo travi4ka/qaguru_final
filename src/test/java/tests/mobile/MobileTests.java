@@ -12,11 +12,11 @@ import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 import static io.qameta.allure.Allure.step;
 
+@Tag("mobile")
 @DisplayName("Mobile tests")
 public class MobileTests extends TestBase {
     @Test
-    @Story("Story_1")
-    @Tag("mobile")
+    @Story("Language Choosing")
     @DisplayName("English language choosing")
     void clickRussianLanguage() {
         step("Click 'English'",
@@ -25,8 +25,7 @@ public class MobileTests extends TestBase {
     }
 
     @Test
-    @Story("Story_1")
-    @Tag("mobile")
+    @Story("Links Check")
     @DisplayName("Check broken links")
     void checkThePresenceOfBrokenImages() {
         step("Click 'English'",
@@ -45,8 +44,7 @@ public class MobileTests extends TestBase {
     }
 
     @Test
-    @Story("Story_1")
-    @Tag("mobile")
+    @Story("Login Flow")
     @DisplayName("Check that user is not logged in")
     void checkThatUserIsNotLoggedIn() {
         step("Click 'English'",

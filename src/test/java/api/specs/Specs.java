@@ -1,54 +1,28 @@
 package api.specs;
 
-import api.requests.LoginRequest;
-import api.responces.LoginResponse;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;
 
-import java.net.URLEncoder;
-
 import static helpers.CustomApiListener.withCustomTemplates;
-import static io.restassured.RestAssured.given;
-import static java.lang.String.format;
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static tests.TestBase.config;
+import static tests.TestBase.configApi;
 
 public class Specs {
-    private LoginRequest loginRequest = new LoginRequest();
-    private String token;
 
-    public RequestSpecification requestSpecificationWithToken() {
+    public static RequestSpecification requestSpecificationWithToken(String token) {
         return new RequestSpecBuilder()
-                .setBaseUri(config.getBaseApiUrl())
-                .setBasePath(config.getBaseApiPath())
-                .addHeader("token", token != null ? token : getToken())
+                .setBaseUri(configApi.getBaseApiUrl())
+                .setBasePath(configApi.getBaseApiPath())
+                .addHeader("token", token)
                 .addFilter(withCustomTemplates())
                 .build();
     }
 
-    public RequestSpecification requestSpecificationWithoutToken() {
+    public static RequestSpecification requestSpecificationWithoutToken() {
         return new RequestSpecBuilder()
-                .setBaseUri(config.getBaseApiUrl())
-                .setBasePath(config.getBaseApiPath())
+                .setBaseUri(configApi.getBaseApiUrl())
+                .setBasePath(configApi.getBaseApiPath())
                 .addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
                 .addFilter(withCustomTemplates())
                 .build();
-    }
-
-    public String getToken() {
-        loginRequest.setEmail(config.getEmailApi());
-        loginRequest.setPassword(config.getPasswordApi());
-
-        LoginResponse loginResponse = given()
-                .spec(requestSpecificationWithoutToken())
-                .body(format("email=%s&password=%s", URLEncoder.encode(loginRequest.getEmail(), UTF_8), URLEncoder.encode(loginRequest.getPassword(), UTF_8)))
-                .when()
-                .post("/users/signin")
-                .then()
-                .statusCode(200)
-                .extract()
-                .as(LoginResponse.class);
-        token = loginResponse.getUser().getToken();
-        return token;
     }
 }

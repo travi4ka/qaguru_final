@@ -1,4 +1,4 @@
-package config;
+package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
 import io.appium.java_client.android.AndroidDriver;
@@ -15,7 +15,7 @@ import java.net.URL;
 import static io.appium.java_client.remote.AutomationName.ANDROID_UIAUTOMATOR2;
 import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 import static org.apache.commons.io.FileUtils.copyInputStreamToFile;
-import static tests.TestBase.config;
+import static tests.TestBase.configMobile;
 
 public class LocalMobileDriver implements WebDriverProvider {
 
@@ -33,8 +33,8 @@ public class LocalMobileDriver implements WebDriverProvider {
 
         options.setAutomationName(ANDROID_UIAUTOMATOR2)
                 .setPlatformName(ANDROID)
-                .setDeviceName(config.getDevice())
-                .setPlatformVersion(config.getOsVersion())
+                .setDeviceName(configMobile.getDevice())
+                .setPlatformVersion(configMobile.getOsVersion())
                 .setApp(getAppPath())
                 .setAppPackage("ru.twicker.lampa")
                 .setAppActivity("ru.twicker.lampa.ui.MainActivity");

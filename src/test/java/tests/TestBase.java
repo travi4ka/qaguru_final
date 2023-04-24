@@ -1,93 +1,82 @@
 package tests;
 
-import api.LoginApi;
-import api.ProfilesApi;
-import api.UserApi;
+import api.ApiBase;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import config.BrowserstackMobileDriver;
-import config.Config;
-import config.LocalMobileDriver;
-import config.WebDriver;
+import configs.ConfigApi;
+import configs.ConfigMobile;
+import configs.ConfigWeb;
+import drivers.BrowserstackMobileDriver;
+import drivers.LocalMobileDriver;
+import drivers.WebDriver;
 import helpers.Attach;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import pages.*;
+import pages.LandingPage;
+import pages.MainPage;
+import pages.ReleasesPage;
+import pages.SearchPage;
 
 import static com.codeborne.selenide.Selenide.*;
 
 public class TestBase {
-    public static Config config = ConfigFactory.create(Config.class, System.getProperties());
+    public static ConfigWeb configWeb = ConfigFactory.create(ConfigWeb.class, System.getProperties());
+    public static ConfigMobile configMobile = ConfigFactory.create(ConfigMobile.class, System.getProperties());
+    public static ConfigApi configApi = ConfigFactory.create(ConfigApi.class, System.getProperties());
 
     public LandingPage landingPage = new LandingPage();
     public MainPage mainPage = new MainPage();
     public ReleasesPage releasesPage = new ReleasesPage();
     public SearchPage searchPage = new SearchPage();
 
-    public LoginApi loginApi = new LoginApi();
-    public UserApi userApi = new UserApi();
-    public ProfilesApi profilesApi = new ProfilesApi();
+    public ApiBase api = new ApiBase();
 
     @BeforeAll
-    public static void setDriver() {
-        switch (System.getProperty("env")) {
-            case "mobile_local":
-                Configuration.browser = LocalMobileDriver.class.getName();
+    public static void beforeAll() {
+        switch (System.getProperty("taskName")) {
+            case "mobile":
+                Configuration.browser = System.getProperty("env").equals("local") ? LocalMobileDriver.class.getName() : BrowserstackMobileDriver.class.getName();
                 Configuration.browserSize = null;
                 break;
-            case "mobile_bs":
-                Configuration.browser = BrowserstackMobileDriver.class.getName();
-                Configuration.browserSize = null;
-                break;
-            case "web_local":
-                new WebDriver();
-                break;
-            case "web_remote":
+            case "web":
                 new WebDriver();
                 break;
             case "api":
                 break;
             default:
-                throw new RuntimeException("Wrong environment");
+                throw new RuntimeException("Wrong task name");
         }
     }
 
     @BeforeEach
-    void addListener() {
+    void beforeEach() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
-        if (!System.getProperty("env").equals("api")) open();
+        if (!System.getProperty("taskName").equals("api")) open();
     }
 
     @AfterEach
     void afterEach() {
-        switch (System.getProperty("env")) {
-            case "mobile_local":
-                Attach.pageSource();
-                closeWebDriver();
+        switch (System.getProperty("taskName")) {
+            case "mobile":
+                if (System.getProperty("env").equals("local")) {
+                    Attach.pageSource();
+                    closeWebDriver();
+                } else {
+                    String sessionId = Selenide.sessionId().toString();
+                    Attach.pageSource();
+                    closeWebDriver();
+                    Attach.addVideo(sessionId);
+                }
                 break;
-            case "mobile_bs":
-                String sessionId = Selenide.sessionId().toString();
-                Attach.pageSource();
-                closeWebDriver();
-                Attach.addVideo(sessionId);
-                break;
-            case "web_remote":
+            case "web":
                 Attach.screenshotAs("Last screenshot");
                 Attach.pageSource();
                 Attach.browserConsoleLogs();
-                Attach.addVideo();
-                clearBrowserCookies();
-                sessionStorage().clear();
-                localStorage().clear();
-                break;
-            case "web_local":
-                Attach.screenshotAs("Last screenshot");
-                Attach.pageSource();
-                Attach.browserConsoleLogs();
+                if (System.getProperty("env").equals("remote")) Attach.addVideo();
                 clearBrowserCookies();
                 sessionStorage().clear();
                 localStorage().clear();
@@ -95,7 +84,7 @@ public class TestBase {
             case "api":
                 break;
             default:
-                throw new RuntimeException("Wrong environment");
+                throw new RuntimeException("Wrong task name");
         }
     }
 }

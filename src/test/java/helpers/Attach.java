@@ -1,7 +1,7 @@
 package helpers;
 
 import com.codeborne.selenide.Selenide;
-import config.Config;
+import configs.ConfigWeb;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.restassured.AllureRestAssured;
 import org.aeonbits.owner.ConfigFactory;
@@ -17,6 +17,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.openqa.selenium.logging.LogType.BROWSER;
+import static tests.TestBase.*;
 
 public class Attach {
     @Attachment(value = "{attachName}", type = "image/png")
@@ -66,12 +67,12 @@ public class Attach {
     }
 
     public static String getVideoUrl(String sessionId) {
-        Config config = ConfigFactory.create(Config.class, System.getProperties());
+        ConfigWeb config = ConfigFactory.create(ConfigWeb.class, System.getProperties());
         String url = format("https://api.browserstack.com/app-automate/sessions/%s.json", sessionId);
 
         return given()
                 .filter(new AllureRestAssured())
-                .auth().basic(config.getLogin(), config.getPassword())
+                .auth().basic(configMobile.getLogin(), configMobile.getPassword())
                 .when()
                 .get(url)
                 .then()

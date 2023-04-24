@@ -1,17 +1,17 @@
-package config;
+package drivers;
 
 import com.codeborne.selenide.Configuration;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static tests.TestBase.config;
+import static tests.TestBase.configWeb;
 
 public class WebDriver {
     public WebDriver() {
-        Configuration.browser = config.getBrowser();
-        Configuration.baseUrl = config.getBaseUrl();
-        Configuration.browserVersion = config.getBrowserVersion();
-        Configuration.remote = config.getRemote();
-        Configuration.browserSize = config.getBrowserSize();
+        Configuration.browser = configWeb.getBrowser();
+        Configuration.baseUrl = configWeb.getBaseUrl();
+        Configuration.browserVersion = configWeb.getBrowserVersion();
+        Configuration.remote = configWeb.getRemote();
+        Configuration.browserSize = configWeb.getBrowserSize();
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("selenoid:options", java.util.Map.<String, Object>of("enableVNC", true, "enableVideo", true));

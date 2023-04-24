@@ -1,8 +1,8 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import pages.components.LeftMenu;
-import pages.components.TopMenu;
+import pages.components.LeftMenuComponent;
+import pages.components.TopMenuComponent;
 import io.qameta.allure.Step;
 
 import static com.codeborne.selenide.Condition.visible;
@@ -13,18 +13,13 @@ public class MainPage {
     private SelenideElement title = $(byText("Главная - TMDB"));
     private SelenideElement languageRussianElement = $(byText("Русский"));
 
-    public LeftMenu leftMenu = new LeftMenu();
-    public TopMenu topMenu = new TopMenu();
+    public LeftMenuComponent leftMenuComponent = new LeftMenuComponent();
+    public TopMenuComponent topMenuComponent = new TopMenuComponent();
 
     @Step("Page is open")
-    public MainPage pageIsOpen() {
+    public MainPage verifyThatPageIsOpen() {
         title.shouldBe(visible);
         return this;
     }
 
-    @Step("Click 'Русский'")
-    public MainPage clickRussian() {
-        languageRussianElement.click();
-        return this;
-    }
 }

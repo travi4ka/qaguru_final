@@ -1,20 +1,20 @@
 package api;
 
-import api.responses.GetUserResponse;
+import api.responses.GetAllIptvLinkedResponse;
 
 import static api.specs.Specs.requestSpecificationWithToken;
 import static io.restassured.RestAssured.given;
 
-public class UserApi {
+public class IptvApi {
 
-    public GetUserResponse getUserDetails(String token) {
+    public GetAllIptvLinkedResponse getAllIptvLinked(String token) {
         return given()
                 .spec(requestSpecificationWithToken(token))
                 .when()
-                .get("/users/get")
+                .get("/iptv/all")
                 .then()
                 .statusCode(200)
                 .extract()
-                .as(GetUserResponse.class);
+                .as(GetAllIptvLinkedResponse.class);
     }
 }

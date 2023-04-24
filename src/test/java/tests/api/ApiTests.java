@@ -6,32 +6,44 @@ import org.junit.jupiter.api.Test;
 import tests.TestBase;
 
 @DisplayName("Api tests")
+@Tag("api")
 public class ApiTests extends TestBase {
+
     @Test
-    @Tag("api")
     @DisplayName("It is possible to log in")
     void itIsPossibleToLogIn() {
-        loginApi
-                .logIn();
+        api.logIn();
     }
 
     @Test
-    @Tag("api")
+    @DisplayName("Verify That User has 1 bot linked")
+    void verifyThatUserHas1BotLinked() {
+        api
+                .logIn()
+                .verifyThatUserHas1BotLinked();
+    }
+
+    @Test
     @DisplayName("Users email matches entered credentials")
     void usersEmailMatchesEnteredCredentials() {
-        loginApi
-                .logIn();
-        userApi
-                .userSEmailMatchesEnteredCredentials();
+        api
+                .logIn()
+                .verifyThatEmailInRequestAndResponseIsTheSameWhenLoggingIn();
     }
 
     @Test
-    @Tag("api")
     @DisplayName("User has profile with name 'Common' attached")
     void userHasProfileWithNameCommonAttached() {
-        loginApi
-                .logIn();
-        profilesApi
-                .userHasProfileCommon();
+        api
+                .logIn()
+                .verifyThatUserHasCommonProfile();
+    }
+
+    @Test
+    @DisplayName("Verify That User has iptv stored in GitHub")
+    void verifyThatUserHasIptvStoredInGitHub() {
+        api
+                .logIn()
+                .verifyThatUserHasIptvStoredInGitHub();
     }
 }

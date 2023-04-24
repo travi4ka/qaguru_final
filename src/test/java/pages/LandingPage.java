@@ -3,7 +3,7 @@ package pages;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import pages.components.Modal;
+import pages.components.ModalMouseUsageComponent;
 import io.qameta.allure.Step;
 import org.junit.jupiter.api.Assertions;
 
@@ -17,17 +17,17 @@ public class LandingPage {
     private SelenideElement titleHeader = $(byText("Добро пожаловать"));
     private SelenideElement languageRussianElement = $(byText("Русский"));
 
-    public Modal modal = new Modal();
+    public ModalMouseUsageComponent modalMouseUsageComponent = new ModalMouseUsageComponent();
 
     @Step("Open landing page")
     public LandingPage openPage() {
         open(Configuration.baseUrl);
-        pageIsOpen();
+        verifyThatPageIsOpen();
         return this;
     }
 
     @Step("Page is open")
-    public LandingPage pageIsOpen() {
+    public LandingPage verifyThatPageIsOpen() {
         titleHeader.shouldBe(visible);
         return this;
     }

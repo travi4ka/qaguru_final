@@ -1,20 +1,20 @@
 package api;
 
-import api.responses.GetUserResponse;
+import api.responses.GetAllBotsResponse;
 
 import static api.specs.Specs.requestSpecificationWithToken;
 import static io.restassured.RestAssured.given;
 
-public class UserApi {
+public class BotsApi {
 
-    public GetUserResponse getUserDetails(String token) {
+    public GetAllBotsResponse getAllBotsForUser(String token) {
         return given()
                 .spec(requestSpecificationWithToken(token))
                 .when()
-                .get("/users/get")
+                .get("/bot_management/all")
                 .then()
                 .statusCode(200)
                 .extract()
-                .as(GetUserResponse.class);
+                .as(GetAllBotsResponse.class);
     }
 }
