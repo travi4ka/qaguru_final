@@ -3,6 +3,8 @@ package api;
 import api.models.ProfileModel;
 import io.qameta.allure.Step;
 
+import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static tests.TestBase.configApi;
 
@@ -29,7 +31,7 @@ public class ApiBase {
 
     @Step("Verify That User has iptv stored in GitHub")
     public ApiBase verifyThatUserHasIptvStoredInGitHub() {
-        assertTrue(iptvApi.getAllIptvLinked(getToken()).getIptv().stream().filter(x -> x.getUrl().contains("github.io")).toList().size() > 0);
+        assertTrue(iptvApi.getAllIptvLinked(getToken()).getIptv().stream().filter(x -> x.getUrl().contains("github.io")).collect(Collectors.toList()).size() > 0);
         return this;
     }
 
