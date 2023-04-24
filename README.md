@@ -55,18 +55,24 @@
 <h2 name="launch">:memo:Запуск тестов:memo:</h2>
 
 <pre>
-gradle clean ${env} -Denv=${env}
+gradle clean ${task} -Denv=${env}
+</pre>
+
+Доступные значения переменной ${task}
+
+<pre>
+web - запуск Web тестов с тегом "web"
+mobile - запуск Mobile тестов с тегом "mobile"
+api - запуск Api тестов с тегом "api"
 </pre>
 
 Доступные значения переменной ${env}
 
 <pre>
-web_local - локальный запуск Web тестов с тегом "web"
-web_remote - удаленный запуск Web тестов с тегом "web"
-mobile_local - локальный запуск Mobile тестов с тегом "mobile"
-mobile_bs - удаленный запуск Mobile тестов с тегом "mobile" в Browserstack
-api - запуск Api тестов с тегом "api"
+local - локальный запуск тестов
+remote - удаленный запуск тестов
 </pre>
+
 <pre>
 Параметры каждой переменной ${env} содержатся в соответствующем файле .properties, расположенном в ресурсах
 </pre>
